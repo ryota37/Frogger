@@ -30,6 +30,16 @@ namespace Coordinate
 	constexpr int BOTTUM_GRID_Y = 550;
 	constexpr int START_GRID_X = 350;
 	constexpr int START_GRID_Y = 550;
+	constexpr int SAFE_AREA_ROW = 2;
+}
+
+void DrawSafeArea(const Grid<int32>& grid)
+{
+	for (int32 x = 0; x < grid.width(); ++x)
+	{
+		const RectF rect{ (x * 100), (Coordinate::SAFE_AREA_ROW * 100), 100 };
+		rect.stretched(-1).draw(Palette::Brown);
+	}
 }
 
 bool isWallUp(Circle& circle, Grid<int32>& grid, int grid_x, int grid_y)
@@ -104,6 +114,7 @@ void Main()
 	while (System::Update())
 	{
 		DrawGrid(grid);
+		DrawSafeArea(grid);
 
 		UpdateCircle(circle, grid);
 
