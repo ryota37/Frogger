@@ -42,6 +42,16 @@ void DrawSafeArea(const Grid<int32>& grid)
 	}
 }
 
+void DrawObstacles(Array<RectF>& obstacles)
+{
+	for (auto& obstacle : obstacles)
+	{
+		obstacle.x += Scene::DeltaTime() * 100;
+		if (obstacle.x >= 800) obstacle.x = 0;
+		obstacle.stretched(-1).draw(Palette::Orange);
+	}
+}
+
 bool isWallUp(Circle& circle, Grid<int32>& grid, int grid_x, int grid_y)
 {
 	if (circle.y == Coordinate::TOP_GRID_Y) return true;
@@ -110,11 +120,14 @@ void Main()
 	Grid<int32> grid(8, 6);
 	Circle circle{ Coordinate::START_GRID_X,Coordinate::START_GRID_Y,25 };
 	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+	RectF obstacle{ 0, 300, 100 };
+	Array<RectF> obstacles = { RectF{ 0, 300, 100 }, RectF{ 200, 300, 100 }, RectF{ 400, 300, 100 } };
 
 	while (System::Update())
 	{
 		DrawGrid(grid);
 		DrawSafeArea(grid);
+		DrawObstacles(obstacles);
 
 		UpdateCircle(circle, grid);
 
