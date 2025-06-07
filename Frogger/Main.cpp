@@ -33,22 +33,22 @@ namespace Coordinate
 	constexpr int SAFE_AREA_ROW = 2;
 }
 
-void DrawSafeArea(const Grid<int32>& grid)
+void DrawSafeArea(const Grid<int32>& grid, const Color& color)
 {
 	for (int32 x = 0; x < grid.width(); ++x)
 	{
 		const RectF rect{ (x * 100), (Coordinate::SAFE_AREA_ROW * 100), 100 };
-		rect.stretched(-1).draw(Palette::Brown);
+		rect.stretched(-1).draw(color);
 	}
 }
 
-void DrawObstacles(Array<RectF>& obstacles)
+void DrawObstacles(Array<RectF>& obstacles, const Color& color)
 {
 	for (auto& obstacle : obstacles)
 	{
 		obstacle.x += Scene::DeltaTime() * 100;
 		if (obstacle.x >= 800) obstacle.x = 0;
-		obstacle.stretched(-1).draw(Palette::Orange);
+		obstacle.stretched(-1).draw(color);
 	}
 }
 
@@ -121,13 +121,17 @@ void Main()
 	Circle circle{ Coordinate::START_GRID_X,Coordinate::START_GRID_Y,25 };
 	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 	RectF obstacle{ 0, 300, 100 };
-	Array<RectF> obstacles = { RectF{ 0, 300, 100 }, RectF{ 200, 300, 100 }, RectF{ 400, 300, 100 } };
+	Array<RectF> obstacles1 = { RectF{ 0, 400, 100 }, RectF{ 200, 400, 100 }, RectF{ 400, 400, 100 } };
+	Array<RectF> obstacles2 = { RectF{ 0, 300, 100 }, RectF{ 200, 300, 100 }, RectF{ 400, 300, 100 } };
+	Array<RectF> obstacles3 = { RectF{ 0, 100, 100 }, RectF{ 200, 100, 100 }, RectF{ 400, 100, 100 } };
 
 	while (System::Update())
 	{
 		DrawGrid(grid);
-		DrawSafeArea(grid);
-		DrawObstacles(obstacles);
+		DrawSafeArea(grid, Palette::Lavender);
+		DrawObstacles(obstacles1, Palette::Orange);
+		DrawObstacles(obstacles2, Palette::Orange);
+		DrawObstacles(obstacles3, Palette::Olive);
 
 		UpdateCircle(circle, grid);
 
