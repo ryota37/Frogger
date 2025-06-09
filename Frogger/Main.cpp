@@ -52,6 +52,19 @@ void DrawObstacles(Array<RectF>& obstacles, const Color& color)
 	}
 }
 
+void detectCollision(Array<RectF>& obstacles, Circle& circle)
+{
+	for (auto& obstacle : obstacles)
+	{
+		if (obstacle.intersects(circle))
+		{
+			Print << U"GameOver!!";
+			circle.x = Coordinate::START_GRID_X;
+			circle.y = Coordinate::START_GRID_Y;
+		}
+	}
+}
+
 bool isWallUp(Circle& circle, Grid<int32>& grid, int grid_x, int grid_y)
 {
 	if (circle.y == Coordinate::TOP_GRID_Y) return true;
@@ -129,9 +142,14 @@ void Main()
 	{
 		DrawGrid(grid);
 		DrawSafeArea(grid, Palette::Lavender);
+
 		DrawObstacles(obstacles1, Palette::Orange);
 		DrawObstacles(obstacles2, Palette::Orange);
 		DrawObstacles(obstacles3, Palette::Olive);
+
+		detectCollision(obstacles1, circle);
+		detectCollision(obstacles2, circle);
+		detectCollision(obstacles3, circle);
 
 		UpdateCircle(circle, grid);
 
