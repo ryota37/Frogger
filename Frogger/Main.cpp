@@ -42,11 +42,11 @@ void DrawSafeArea(const Grid<int32>& grid, const Color& color)
 	}
 }
 
-void DrawObstacles(Array<RectF>& obstacles, const Color& color)
+void DrawObstacles(Array<RectF>& obstacles, const Color& color, int speed)
 {
 	for (auto& obstacle : obstacles)
 	{
-		obstacle.x += Scene::DeltaTime() * 100;
+		obstacle.x += Scene::DeltaTime() * speed;
 		if (obstacle.x >= 800) obstacle.x = 0;
 		obstacle.stretched(-1).draw(color);
 	}
@@ -143,9 +143,9 @@ void Main()
 		DrawGrid(grid);
 		DrawSafeArea(grid, Palette::Lavender);
 
-		DrawObstacles(obstacles1, Palette::Orange);
-		DrawObstacles(obstacles2, Palette::Orange);
-		DrawObstacles(obstacles3, Palette::Olive);
+		DrawObstacles(obstacles1, Palette::Orange, 100);
+		DrawObstacles(obstacles2, Palette::Orange, 200);
+		DrawObstacles(obstacles3, Palette::Olive, 300);
 
 		detectCollision(obstacles1, circle);
 		detectCollision(obstacles2, circle);
