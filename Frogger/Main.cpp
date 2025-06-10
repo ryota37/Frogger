@@ -65,6 +65,14 @@ void detectCollision(Array<RectF>& obstacles, Circle& circle)
 	}
 }
 
+void detectGoal(Circle& circle)
+{
+	if (circle.y == Coordinate::TOP_GRID_Y)
+	{
+		Print << U"GameClear!!";
+	}
+}
+
 bool isWallUp(Circle& circle, Grid<int32>& grid, int grid_x, int grid_y)
 {
 	if (circle.y == Coordinate::TOP_GRID_Y) return true;
@@ -150,6 +158,8 @@ void Main()
 		detectCollision(obstacles1, circle);
 		detectCollision(obstacles2, circle);
 		detectCollision(obstacles3, circle);
+
+		detectGoal(circle);
 
 		UpdateCircle(circle, grid);
 
